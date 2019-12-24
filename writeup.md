@@ -17,17 +17,6 @@ The goals / steps of this project are the following:
 * Summarize the results with a written report
 
 
-[//]: # (Image References)
-
-[image1]: ./examples/visualization.jpg "Visualization"
-[image2]: ./examples/grayscale.jpg "Grayscaling"
-[image3]: ./examples/random_noise.jpg "Random Noise"
-[image4]: ./examples/placeholder.png "Traffic Sign 1"
-[image5]: ./examples/placeholder.png "Traffic Sign 2"
-[image6]: ./examples/placeholder.png "Traffic Sign 3"
-[image7]: ./examples/placeholder.png "Traffic Sign 4"
-[image8]: ./examples/placeholder.png "Traffic Sign 5"
-
 ## Rubric Points
 ### Here I will consider the [rubric points](https://review.udacity.com/#!/rubrics/481/view) individually and describe how I addressed each point in my implementation.  
 
@@ -163,6 +152,19 @@ For the first image, the model is relatively sure that this is a stop sign (prob
 | .01				    | Slippery Road      							|
 
 
+EXAMPLE WHERE THERE WAS A FAILURE ON THE FIVE IMAGE TEST.. WRITE SOME COMMENTS ON THE WRONGLY CLASSIFIED IMAGE AND SAY THAT IT WAS HAPPENING APPROX 1 TIME EVERY 20 DIFFERENT MODEL TRAININGS
+
+INFO:tensorflow:Restoring parameters from ./sign_recognition
+TopKV2(values=array([[  6.120e-01,   3.732e-01,   5.896e-03,   5.357e-03,   1.821e-03],
+       [  8.742e-01,   1.258e-01,   1.798e-05,   4.896e-06,   3.788e-07],
+       [  9.998e-01,   1.189e-04,   4.936e-05,   5.735e-06,   1.968e-07],
+       [  1.000e+00,   9.568e-12,   5.287e-12,   4.942e-14,   4.049e-14],
+       [  9.999e-01,   6.769e-05,   7.937e-07,   5.344e-07,   4.779e-07]], dtype=float32), indices=array([[ 0,  1, 14,  2,  4],
+       [17, 14,  1,  0, 29],
+       [ 9, 10, 41, 12, 13],
+       [12, 32, 13, 42, 17],
+       [14,  1,  5, 29, 17]], dtype=int32))
+       
 For the second image ... 
 
 ### (Optional) Visualizing the Neural Network (See Step 4 of the Ipython notebook for more details)
