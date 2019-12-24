@@ -16,60 +16,52 @@ The goals / steps of this project are the following:
 * Analyze the softmax probabilities of the new images
 * Summarize the results with a written report
 
+Here is the link to my GitHub repository for this project: https://github.com/marcorossi10/CarND-Traffic-Sign-Classifier-Project
 
 ## Rubric Points
 ### Here I will consider the [rubric points](https://review.udacity.com/#!/rubrics/481/view) individually and describe how I addressed each point in my implementation.  
-
----
-### Writeup / README
-
-#### 1. Provide a Writeup / README that includes all the rubric points and how you addressed each one. You can submit your writeup as markdown or pdf. You can use this template as a guide for writing the report. The submission includes the project code.
-
-You're reading it! and here is a link to my [project code](https://github.com/udacity/CarND-Traffic-Sign-Classifier-Project/blob/master/Traffic_Sign_Classifier.ipynb)
 
 ### Data Set Summary & Exploration
 
 #### 1. Provide a basic summary of the data set. In the code, the analysis should be done using python, numpy and/or pandas methods rather than hardcoding results manually.
 
-I used the pandas library to calculate summary statistics of the traffic
-signs data set:
+In this section (cell number 2) of the notebook I will obtain useful information starting from the imported data. I will calculate the size of the training set, of the validation set and of the testing set. Here, it is also shown the input images shape. Moreover, I define a function to get the number of the classes in the data set by reading the last row of the file `signnames.csv`. In this way the pipeline will work even if new sign will be added to the file.
 
-* The size of training set is ?
-* The size of the validation set is ?
-* The size of test set is ?
-* The shape of a traffic sign image is ?
-* The number of unique classes/labels in the data set is ?
+* The size of training set is 34799
+* The size of the validation set is 4410
+* The size of test set is 12630
+* The shape of a traffic sign image is (32, 32, 3)
+* The number of unique classes/labels in the data set is 43
 
 #### 2. Include an exploratory visualization of the dataset.
 
-Here is an exploratory visualization of the data set. It is a bar chart showing how the data ...
+This part is addressed from cell number 3 to 5 of the notebook.
+In this section I will plot one image of each type included in the training data set. In the title of the image I will also write the corresponding description; I achieved that by implementing the function `find_sign_description()` that returns the description of the signal based on the input label (reading directly from the file `signnames.csv`).
 
-![alt text][image1]
+Note that the input data are shuffled to run the algorithm each time on a different set of images. In this way I could have a rough idea of the training set and if there were correspondence between the label and the image itself.
+
+In the visualization part, when adjacents images have long titles, it might be that these titles collide.
+
 
 ### Design and Test a Model Architecture
 
 #### 1. Describe how you preprocessed the image data. What techniques were chosen and why did you choose these techniques? Consider including images showing the output of each preprocessing technique. Pre-processing refers to techniques such as converting to grayscale, normalization, etc. (OPTIONAL: As described in the "Stand Out Suggestions" part of the rubric, if you generated additional data for training, describe why you decided to generate additional data, how you generated the data, and provide example images of the additional data. Then describe the characteristics of the augmented training set like number of images in the set, number of images for each class, etc.)
 
-As a first step, I decided to convert the images to grayscale because ...
-
-Here is an example of a traffic sign image before and after grayscaling.
-
-![alt text][image2]
-
-As a last step, I normalized the image data because ...
-
-I decided to generate additional data because ... 
-
-To add more data to the the data set, I used the following techniques because ... 
-
-Here is an example of an original image and an augmented image:
-
-![alt text][image3]
-
-The difference between the original data set and the augmented data set is the following ... 
-
+The preprocessing of the data takes place in the cell number 6 of the notebook. 
+It consists only on the implementation of the function data_normalization(). This function is implementing the suggestion given in the project comments: its main aim is to obtain a distribution of the data that will resemble a Gaussian curve centered at zero.
 
 #### 2. Describe what your final model architecture looks like including model type, layers, layer sizes, connectivity, etc.) Consider including a diagram and/or table describing the final model.
+
+The starting point of my work has been the LeNet architecture and the analysis of the result/accuracy on the validation set. 
+The results were already "decent" since the final accuracy was roughly oscillating between 0.82 and 0.86.
+
+To improve the above mentioned result I implemented the dropout technique at the end of each layer.
+....
+....   THIS POINTS MIGHT GO LATER IN THE NEXT SESSIONS
+...
+
+This approach increased the final accuracy on the validation set quite drastically, leading to a final value included (most of the times) between 0.95 and 0.94 (in all the test-run I tried the results were higher than the required threshold of 0.93)
+
 
 My final model consisted of the following layers:
 
@@ -152,7 +144,16 @@ For the first image, the model is relatively sure that this is a stop sign (prob
 | .01				    | Slippery Road      							|
 
 
+
+       
+For the second image ... 
+
+
+
 EXAMPLE WHERE THERE WAS A FAILURE ON THE FIVE IMAGE TEST.. WRITE SOME COMMENTS ON THE WRONGLY CLASSIFIED IMAGE AND SAY THAT IT WAS HAPPENING APPROX 1 TIME EVERY 20 DIFFERENT MODEL TRAININGS
+
+The error I encountered was mainly a wrong classification of the speed limit sign (generally confusing 20 km/h with 30 or 50 Km/h)
+
 
 INFO:tensorflow:Restoring parameters from ./sign_recognition
 TopKV2(values=array([[  6.120e-01,   3.732e-01,   5.896e-03,   5.357e-03,   1.821e-03],
@@ -164,10 +165,3 @@ TopKV2(values=array([[  6.120e-01,   3.732e-01,   5.896e-03,   5.357e-03,   1.82
        [ 9, 10, 41, 12, 13],
        [12, 32, 13, 42, 17],
        [14,  1,  5, 29, 17]], dtype=int32))
-       
-For the second image ... 
-
-### (Optional) Visualizing the Neural Network (See Step 4 of the Ipython notebook for more details)
-#### 1. Discuss the visual output of your trained network's feature maps. What characteristics did the neural network use to make classifications?
-
-
