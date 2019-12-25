@@ -117,42 +117,77 @@ Moreover I also chose the priority road sign (the file named 'five_images_exampl
 I run the entire algorithm (including the training part) multiple times. I did this since the data are randomly shuffled each time and I wanted to evaluate if the decided architecture and the selected hyperparameters were always performing well on the training/validation/test sets. 
 
 The model was able to correctly guess 5 of the 5 traffic signs most of the times. 
-However, in some cases, the speed limit sign was not correctly classified: the details will be given in the next paragraph.
-
+However, in some cases (roughly speaking 1 time every 20), the speed limit sign was not correctly classified: the details will be given in the next paragraph.
 
 #### 3. Describe how certain the model is when predicting on each of the five new images by looking at the softmax probabilities for each prediction. Provide the top 5 softmax probabilities for each image along with the sign type of each probability. (OPTIONAL: as described in the "Stand Out Suggestions" part of the rubric, visualizations can also be provided such as bar charts)
 
-The code for making predictions on my final model is located in the 11th cell of the Ipython notebook.
+The code for making predictions on my final model is located in the 15th and 16th cells of the Ipython notebook.
 
-For the first image, the model is relatively sure that this is a stop sign (probability of 0.6), and the image does contain a stop sign. The top five soft max probabilities were
+First I will show the results for a model that classify all the test images correclty.
 
-| Probability         	|     Prediction	        					| 
-|:---------------------:|:---------------------------------------------:| 
-| .60         			| Stop sign   									| 
-| .20     				| U-turn 										|
-| .05					| Yield											|
-| .04	      			| Bumpy Road					 				|
-| .01				    | Slippery Road      							|
+**30 KM/H SIGN**
 
+| Probability         	|     Prediction	     	| 
+|:---------------------:|:-------------------------:| 
+| 9.29e-01    			| Speed limit (30km/h) 		| 
+| 6.63e-02				| Speed limit (20km/h)		|
+| 2.44e-03				| Speed limit (50km/h)		|
+| 1.42e-03    			| Children crossing			|
+| 9.35e-04			    | Wild animals crossing		|
 
+**NO ENTRY SIGN**
 
-       
-For the second image ... 
+| Probability         	|     Prediction	     	| 
+|:---------------------:|:-------------------------:| 
+| 1.00         			| No entry   				| 
+| 2.07e-09    			| Stop 						|
+| 8.69e-11				| No passing				|
+| 6.14e-14	     		| Speed limit (70km/h)		|
+| 5.74e-14			    | Speed limit (30km/h)  	|
 
+**NO PASSING SIGN**
 
+| Probability         	|     Prediction	        				| 
+|:---------------------:|:-----------------------------------------:| 
+| 1.00           		| No passing   								| 
+| 6.01e-08     			| End of no passing 						|
+| 6.07e-09				| Vehicles over 3.5 metric tons prohibited	|
+| 1.26e-09	      		| No entry					 				|
+| 4.50e-10			    | Priority road    							|
 
-EXAMPLE WHERE THERE WAS A FAILURE ON THE FIVE IMAGE TEST.. WRITE SOME COMMENTS ON THE WRONGLY CLASSIFIED IMAGE AND SAY THAT IT WAS HAPPENING APPROX 1 TIME EVERY 20 DIFFERENT MODEL TRAININGS
+**ROAD WITH PRIORITY SIGN**
 
-The error I encountered was mainly a wrong classification of the speed limit sign (generally confusing 20 km/h with 30 or 50 Km/h)
+| Probability         	|     Prediction	        				| 
+|:---------------------:|:-----------------------------------------:| 
+| 1.00           		| Priority road  							| 
+| 1.12e-12    			| Right-of-way at the next intersection		|
+| 7.45e-14				| Traffic signals							|
+| 2.17e-14	      		| No entry					 				|
+| 1.06e-14			    | Road work      							|
 
+**STOP SIGN**
 
-INFO:tensorflow:Restoring parameters from ./sign_recognition
-TopKV2(values=array([[  6.120e-01,   3.732e-01,   5.896e-03,   5.357e-03,   1.821e-03],
-       [  8.742e-01,   1.258e-01,   1.798e-05,   4.896e-06,   3.788e-07],
-       [  9.998e-01,   1.189e-04,   4.936e-05,   5.735e-06,   1.968e-07],
-       [  1.000e+00,   9.568e-12,   5.287e-12,   4.942e-14,   4.049e-14],
-       [  9.999e-01,   6.769e-05,   7.937e-07,   5.344e-07,   4.779e-07]], dtype=float32), indices=array([[ 0,  1, 14,  2,  4],
-       [17, 14,  1,  0, 29],
-       [ 9, 10, 41, 12, 13],
-       [12, 32, 13, 42, 17],
-       [14,  1,  5, 29, 17]], dtype=int32))
+| Probability         	|     Prediction	      	| 
+|:---------------------:|:-------------------------:| 
+| 1.00          		| Stop sign   				| 
+| 3.15e-05     			| Speed limit (30km/h) 		|
+| 2.43e-05				| Slippery road				|
+| 8.50e-06	      		| Speed limit (50km/h)		|
+|  6.00e-06			    | Speed limit (60km/h)  	|
+
+As it is possible to be seen from the tables the model is quite sure on what it is classifying, since there is always at least one order of magnitude of difference between the first and the second probability.
+
+On the other hand, as mentioned in the previous section, sometime models that were misclassifying the speed limit sign were found. Generally the "wrong" models confusing 20 km/h with 30 or 50 Km/h.
+In the next final table I report the probabilities obtained in such a situation for the speed limit sign:
+
+**30 KM/H SIGN**
+
+| Probability         	|     Prediction	        | 
+|:---------------------:|:-----------------------  :| 
+| 6.12e-01    			| Speed limit (20km/h) 		| 
+| 3.73e-01				| Speed limit (30km/h) 		|
+| 5.89e-03				| Stop						|
+| 5.35e-03    			| Speed limit (50km/h)		|
+| 1.82e-03			    | Speed limit (70km/h)     	|
+
+Is it possible to see how this particular model is uncertain between different speed limits values, especially between 20 and 30 Km/h leading to a wrong classification of the sign.
