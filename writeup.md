@@ -177,17 +177,17 @@ First I will show the results for a model that classify all the test images corr
 
 As it is possible to be seen from the tables the model is quite sure on what it is classifying, since there is always at least one order of magnitude of difference between the first and the second probability.
 
-On the other hand, as mentioned in the previous section, sometime models that were misclassifying the speed limit sign were found. Generally the "wrong" models confusing 20 km/h with 30 or 50 Km/h.
+On the other hand, as mentioned in the previous section, sometime models that were misclassifying the speed limit sign were found. Generally the "wrong" models were confusing 20 km/h with 30 or 50 Km/h.
 In the next final table I report the probabilities obtained in such a situation for the speed limit sign:
 
 **30 KM/H SIGN**
 
 | Probability         	|     Prediction	        | 
-|:---------------------:|:-----------------------  :| 
+|:---------------------:|:-------------------------:| 
 | 6.12e-01    			| Speed limit (20km/h) 		| 
 | 3.73e-01				| Speed limit (30km/h) 		|
 | 5.89e-03				| Stop						|
 | 5.35e-03    			| Speed limit (50km/h)		|
 | 1.82e-03			    | Speed limit (70km/h)     	|
 
-Is it possible to see how this particular model is uncertain between different speed limits values, especially between 20 and 30 Km/h leading to a wrong classification of the sign.
+Is it possible to see how this particular model is uncertain between different speed limits values, especially between 20 and 30 Km/h.
