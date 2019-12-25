@@ -2,8 +2,6 @@
 
 ## Writeup
 
-### You can use this file as a template for your writeup if you want to submit it as a markdown file, but feel free to use some other method and submit a pdf if you prefer.
-
 ---
 
 **Build a Traffic Sign Recognition Project**
@@ -52,82 +50,75 @@ It consists only on the implementation of the function data_normalization(). Thi
 
 #### 2. Describe what your final model architecture looks like including model type, layers, layer sizes, connectivity, etc.) Consider including a diagram and/or table describing the final model.
 
-The starting point of my work has been the LeNet architecture and the analysis of the result/accuracy on the validation set. 
-The results were already "decent" since the final accuracy was roughly oscillating between 0.82 and 0.86.
-
-To improve the above mentioned result I implemented the dropout technique at the end of each layer.
-....
-....   THIS POINTS MIGHT GO LATER IN THE NEXT SESSIONS
-...
-
-This approach increased the final accuracy on the validation set quite drastically, leading to a final value included (most of the times) between 0.95 and 0.94 (in all the test-run I tried the results were higher than the required threshold of 0.93)
-
-
 My final model consisted of the following layers:
 
 | Layer         		|     Description	        					| 
 |:---------------------:|:---------------------------------------------:| 
 | Input         		| 32x32x3 RGB image   							| 
-| Convolution 3x3     	| 1x1 stride, same padding, outputs 32x32x64 	|
+| Convolutional		  	| 1x1 stride, VALID padding, outputs 28x28x6 	|
 | RELU					|												|
-| Max pooling	      	| 2x2 stride,  outputs 16x16x64 				|
-| Convolution 3x3	    | etc.      									|
-| Fully connected		| etc.        									|
-| Softmax				| etc.        									|
-|						|												|
-|						|												|
- 
+| DROPOUT				| 0.85 of keep probability						|
+| Max pooling	      	| 2x2 stride, VALID padding,  outputs 14x14x6 	|
+| DROPOUT				| 0.85 of keep probability						|
+| Convolutional   	    | 1x1 stride, VALID padding, outputs 10x10x16	|
+| RELU					|												|
+| DROPOUT				| 0.85 of keep probability						|
+| Max pooling	      	| 2x2 stride, VALID padding,  outputs 5x5x16 	|
+| DROPOUT				| 0.85 of keep probability						|
+| Flattening   			| outputs 400  									|
+| Fully connected		| outputs 120 									|
+| RELU					|												|
+| DROPOUT				| 0.85 of keep probability						|
+| Fully connected		| outputs 84 									|
+| RELU					|												|
+| DROPOUT				| 0.85 of keep probability						|
+| Fully connected		| outputs 43 									|
+
 
 
 #### 3. Describe how you trained your model. The discussion can include the type of optimizer, the batch size, number of epochs and any hyperparameters such as learning rate.
 
-To train the model, I used an ....
+To train the model, I used a batch size of 128 and 25 epochs. Here I decided to increase (with rispect to the LeNet implementation) the number of epochs in order to increase the forward passes and backward passes of all the training examples through the network. This generally leads to a better training of the network but it is also more time-consuming.
+
+The learning rate and the type of the optimizer (AdamOptimizer) have not been modified since they were suggested in the lessons as good default values (and indeed they have been so).
 
 #### 4. Describe the approach taken for finding a solution and getting the validation set accuracy to be at least 0.93. Include in the discussion the results on the training, validation and test sets and where in the code these were calculated. Your approach may have been an iterative process, in which case, outline the steps you took to get to the final solution and why you chose those steps. Perhaps your solution involved an already well known implementation or architecture. In this case, discuss why you think the architecture is suitable for the current problem.
 
-My final model results were:
-* training set accuracy of ?
-* validation set accuracy of ? 
-* test set accuracy of ?
+The starting point of my work has been the LeNet architecture and the analysis of the result/accuracy on the validation set. 
+The first step I had to compute has been to adapt the input and the output layer respectively to the new image input sizes (RGB images so 32x32x3) and to the number of classes (43) representing the traffic signes.
+After these two first modifications I run already the network to check the results: they were already "decent" since the final accuracy (on the validation set) was roughly oscillating between 0.82 and 0.86. In any case, I was facing an under-fitting scenario and I was still too far away from the required accuracy. 
 
-If an iterative approach was chosen:
-* What was the first architecture that was tried and why was it chosen?
-* What were some problems with the initial architecture?
-* How was the architecture adjusted and why was it adjusted? Typical adjustments could include choosing a different model architecture, adding or taking away layers (pooling, dropout, convolution, etc), using an activation function or changing the activation function. One common justification for adjusting an architecture would be due to overfitting or underfitting. A high accuracy on the training set but low accuracy on the validation set indicates over fitting; a low accuracy on both sets indicates under fitting.
-* Which parameters were tuned? How were they adjusted and why?
-* What are some of the important design choices and why were they chosen? For example, why might a convolution layer work well with this problem? How might a dropout layer help with creating a successful model?
+To improve the above mentioned result I implemented the dropout technique at the end of each layer.
+This technique randomly drops neurons of the network and ignore them during training (ONLY during training). Interesting/intuitive explanation on dropout (https://machinelearningmastery.com/dropout-regularization-deep-learning-models-keras/):
 
-If a well known architecture was chosen:
-* What architecture was chosen?
-* Why did you believe it would be relevant to the traffic sign application?
-* How does the final model's accuracy on the training, validation and test set provide evidence that the model is working well?
- 
+`As a neural network learns, neuron weights settle into their context within the network. Weights of neurons are tuned for specific features providing some specialization. Neighboring neurons become to rely on this specialization, which if taken too far can result in a fragile model too specialized to the training data. This reliant on context for a neuron during training is referred to complex co-adaptations.
+
+You can imagine that if neurons are randomly dropped out of the network during training, that other neurons will have to step in and handle the representation required to make predictions for the missing neurons. This is believed to result in multiple independent internal representations being learned by the network.`
+
+This approach increased the final accuracy on the validation set quite drastically, leading to a set of  final accuracies that were included between 0.955 and 0.935 for each new trained model.
+
+An example of final model results are:
+* training set accuracy of 0.998
+* validation set accuracy of 0.945
+* test set accuracy of 0.949
+
 
 ### Test a Model on New Images
 
 #### 1. Choose five German traffic signs found on the web and provide them in the report. For each image, discuss what quality or qualities might be difficult to classify.
 
-Here are five German traffic signs that I found on the web:
+In the cell number 14 of the notebook I imported and plotted the five images downloaded from the web.
 
-![alt text][image4] ![alt text][image5] ![alt text][image6] 
-![alt text][image7] ![alt text][image8]
-
-The first image might be difficult to classify because ...
+I chose on purpose a traffic sign with a speed limit (the file named 'five_images_example/30Km_h.jpg'), because I wanted to see if and how the network was correctly classifying the maximum allowed speed in the sign.
+Moreover I also chose the priority road sign (the file named 'five_images_example/Priority.jpg') since it does not contain "strong" colors such red and blue.
 
 #### 2. Discuss the model's predictions on these new traffic signs and compare the results to predicting on the test set. At a minimum, discuss what the predictions were, the accuracy on these new predictions, and compare the accuracy to the accuracy on the test set (OPTIONAL: Discuss the results in more detail as described in the "Stand Out Suggestions" part of the rubric).
 
-Here are the results of the prediction:
+I run the entire algorithm (including the training part) multiple times. I did this since the data are randomly shuffled each time and I wanted to evaluate if the decided architecture and the selected hyperparameters were always performing well on the training/validation/test sets. 
 
-| Image			        |     Prediction	        					| 
-|:---------------------:|:---------------------------------------------:| 
-| Stop Sign      		| Stop sign   									| 
-| U-turn     			| U-turn 										|
-| Yield					| Yield											|
-| 100 km/h	      		| Bumpy Road					 				|
-| Slippery Road			| Slippery Road      							|
+The model was able to correctly guess 5 of the 5 traffic signs most of the times. 
+However, in some cases, the speed limit sign was not correctly classified: the details will be given in the next paragraph.
 
-
-The model was able to correctly guess 4 of the 5 traffic signs, which gives an accuracy of 80%. This compares favorably to the accuracy on the test set of ...
 
 #### 3. Describe how certain the model is when predicting on each of the five new images by looking at the softmax probabilities for each prediction. Provide the top 5 softmax probabilities for each image along with the sign type of each probability. (OPTIONAL: as described in the "Stand Out Suggestions" part of the rubric, visualizations can also be provided such as bar charts)
 
